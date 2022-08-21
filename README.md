@@ -19,6 +19,11 @@ It also provides information about IP addresses (Public proxies, VPN services, T
 - LRU cache
 - Released under the MIT
 
+### Install 
+    composer require udger/udger-parser-v4
+    
+### Usage
+You should review the included examples/parse.php    
 
 ### Automatic updates download
 - for autoupdate data use Udger data updater (https://udger.com/support/documentation/?doc=62)
