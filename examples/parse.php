@@ -1,10 +1,11 @@
 <?php
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // creates a new UdgerParser object
 $factory = new Udger\ParserFactory(sys_get_temp_dir() . "/udgercache/udgerdb_v4.dat");
 $parser = $factory->getParser();
-$parser->setCacheEnable(false);
+
+//$parser->setCacheEnable(false);
 //$parser->setCacheSize(4000);
 
 try {

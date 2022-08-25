@@ -1,21 +1,23 @@
 {
-    "name": "udger/udger-parser-v4",
+    "name": "udger/udger-php-v4",
     "description": "PHP agent string parser based on Udger https://udger.com/products/local_parser",
     "type": "library",
     "license": "MIT",
     "version": "4.0.0",
     "autoload": {
         "psr-4": {
-            "Udger\\UdgerParserV4\\": "src/"
+            "Udger\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "The Udger.com Team"
+            "name": "The Udger.com Team",
+            "email": "info@udger.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": ">=5.5.0",
         "ext-sqlite3": "*"
     }
 }

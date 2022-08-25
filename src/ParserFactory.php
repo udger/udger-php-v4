@@ -8,14 +8,8 @@ namespace Udger;
  *
  * @author tiborb
  */
-class ParserFactory {
-    
-    /**
-     *
-     * @var string
-     */
-    private $loggerName = 'udger';
-    
+class ParserFactory {    
+  
        
     /**
      * @var string $dataFile path to the data file
