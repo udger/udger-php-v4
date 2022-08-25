@@ -11,6 +11,7 @@
 namespace Udger;
 
 use Udger\Helper\IPInterface;
+use Udger\Helper\HeaderInterface;
 
 /**
  * udger.com Local Parser Class
@@ -20,13 +21,6 @@ use Udger\Helper\IPInterface;
 class Parser implements ParserInterface
 {
     
-    /**
-     * Path to the data file
-     * 
-     * @type string
-     */
-    protected $path;
-
     /**
      * IP address for parse
      * 
@@ -42,6 +36,62 @@ class Parser implements ParserInterface
     protected $ua;
 
     /**
+     * Sec-Ch-Ua string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUa;
+
+    /**
+     * Sec-Ch-Ua-Full-Version-List string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUaFullVersionList;
+
+    /**
+     * Sec-Ch-Ua-Mobile  string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUaMobile;
+
+    /**
+     * Sec-Ch-Ua-Full-Version string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUaFullVersion;
+
+    /**
+     * Sec-Ch-Ua-Platform string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUaPlatform;
+
+    /**
+     * Sec-Ch-Ua-Platform-Version string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUaPlatformVersion;
+
+    /**
+     * Sec-Ch-Ua-Model string for parse
+     * 
+     * @type string
+     */
+    protected $SecChUaModel;    
+
+    /**
+     * Path to the data file
+     * 
+     * @type string
+     */
+    protected $path; 
+    
+    /**
      * DB link
      * 
      * @type object
@@ -53,6 +103,11 @@ class Parser implements ParserInterface
      */
     protected $ipHelper;
     
+    /**
+     * @var HeaderInterface 
+     */
+    protected $headerHelper;
+
     /**
      * @boolean LRU cache enable/disable
      */
@@ -69,11 +124,12 @@ class Parser implements ParserInterface
     protected $cacheSize = 3000;
 
     /**
-     * @param IPInterface
+     * @param IPInterface, HeaderInterface
      */
-    public function __construct(IPInterface $ipHelper)
+    public function __construct(IPInterface $ipHelper, HeaderInterface $headerHelper)
     {
-        $this->ipHelper = $ipHelper;
+        $this->ipHelper     = $ipHelper;
+        $this->headerHelper = $headerHelper;
     }
 
     /**
@@ -98,6 +154,26 @@ class Parser implements ParserInterface
     {
         $this->ip = $ip;
         return true;
+    }
+
+    /**
+     * Set the http Header
+     * 
+     * @param string
+     * @return bool
+     */
+    public function setHeaders($headers)
+    {
+       $ret = array('SecChUa'                 => '',
+                    'SecChUaFullVersionList'  => '',
+                    'SecChUaMobile'           => '',
+                    'SecChUaFullVersion'      => '',
+                    'SecChUaPlatform'         => '',
+                    'SecChUaPlatformVersion'  => '',
+                    'SecChUaModel'            => ''
+                    );
+      $ret = $this->headerHelper->parseHeaders($headers, $ret);
+      return true;
     }
 
     /**

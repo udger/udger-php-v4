@@ -31,7 +31,7 @@ class ParserFactory {
      */
     public function getParser()
     {   
-        $parser = new Parser(new Helper\IP());
+        $parser = new Parser(new Helper\IP(), new Helper\Header());
         $parser->setDataFile($this->dataFile);
         return $parser;
     }
