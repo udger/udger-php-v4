@@ -20,7 +20,7 @@ It also provides information about IP addresses (Public proxies, VPN services, T
 - Released under the MIT
 
 ### Install 
-    composer require udger/udger-parser-v4
+    composer require udger/udger-php-v4
     
 ### Usage
 You should review the included examples/parse.php    
