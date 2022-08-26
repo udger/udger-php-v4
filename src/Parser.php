@@ -29,60 +29,11 @@ class Parser implements ParserInterface
     protected $ip;
 
     /**
-     * Useragent string for parse
+     * Useragent data for parse
      * 
-     * @type string
+     * @type array
      */
-    protected $ua;
-
-    /**
-     * Sec-Ch-Ua string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUa;
-
-    /**
-     * Sec-Ch-Ua-Full-Version-List string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUaFullVersionList;
-
-    /**
-     * Sec-Ch-Ua-Mobile  string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUaMobile;
-
-    /**
-     * Sec-Ch-Ua-Full-Version string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUaFullVersion;
-
-    /**
-     * Sec-Ch-Ua-Platform string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUaPlatform;
-
-    /**
-     * Sec-Ch-Ua-Platform-Version string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUaPlatformVersion;
-
-    /**
-     * Sec-Ch-Ua-Model string for parse
-     * 
-     * @type string
-     */
-    protected $SecChUaModel;    
+    protected $data = array();
 
     /**
      * Path to the data file
@@ -140,7 +91,7 @@ class Parser implements ParserInterface
      */
     public function setUA($ua)
     {
-        $this->ua = $ua;
+        $this->data['ua'] = $ua;
         return true;
     }
 
@@ -157,22 +108,14 @@ class Parser implements ParserInterface
     }
 
     /**
-     * Set the http Header
+     * Set the http Headers
      * 
      * @param string
      * @return bool
      */
     public function setHeaders($headers)
     {
-       $ret = array('SecChUa'                 => '',
-                    'SecChUaFullVersionList'  => '',
-                    'SecChUaMobile'           => '',
-                    'SecChUaFullVersion'      => '',
-                    'SecChUaPlatform'         => '',
-                    'SecChUaPlatformVersion'  => '',
-                    'SecChUaModel'            => ''
-                    );
-      $ret = $this->headerHelper->parseHeaders($headers, $ret);
+      $this->data = $this->headerHelper->parseHeaders($headers, $this->data);
       return true;
     }
 
@@ -190,90 +133,97 @@ class Parser implements ParserInterface
             return array('flag' => 3,
                 'errortext' => 'data file not found');
         }
-
+ 
         //ret values
         $ret = array('user_agent' =>
-            array('ua_string' => '',
-                'ua_class' => '',
-                'ua_class_code' => '',
-                'ua' => '',
-                'ua_version' => '',
-                'ua_version_major' => '',
-                'ua_uptodate_current_version' => '',
-                'ua_family' => '',
-                'ua_family_code' => '',
-                'ua_family_homepage' => '',
-                'ua_family_vendor' => '',
-                'ua_family_vendor_code' => '',
-                'ua_family_vendor_homepage' => '',
-                'ua_family_icon' => '',
-                'ua_family_icon_big' => '',
-                'ua_family_info_url' => '',
-                'ua_engine' => '',
-                'os' => '',
-                'os_code' => '',
-                'os_homepage' => '',
-                'os_icon' => '',
-                'os_icon_big' => '',
-                'os_info_url' => '',
-                'os_family' => '',
-                'os_family_code' => '',
-                'os_family_vendor' => '',
-                'os_family_vendor_code' => '',
-                'os_family_vendor_homepage' => '',
-                'device_class' => '',
-                'device_class_code' => '',
-                'device_class_icon' => '',
-                'device_class_icon_big' => '',
-                'device_class_info_url' => '',
-                'device_marketname'             => '',
-                'device_brand'                  => '',
-                'device_brand_code'             => '',
-                'device_brand_homepage'         => '',
-                'device_brand_icon'             => '',
-                'device_brand_icon_big'         => '',
-                'device_brand_info_url'         => '',
-                'crawler_last_seen' => '',
-                'crawler_category' => '',
-                'crawler_category_code' => '',
-                'crawler_respect_robotstxt' => ''
-            ),
-            'ip_address' =>
-            array('ip' => '',
-                'ip_ver' => '',
-                'ip_classification' => '',
-                'ip_classification_code' => '',
-                'ip_hostname' => '',
-                'ip_last_seen' => '',
-                'ip_country' => '',
-                'ip_country_code' => '',
-                'ip_city' => '',
-                'crawler_name' => '',
-                'crawler_ver' => '',
-                'crawler_ver_major' => '',
-                'crawler_family' => '',
-                'crawler_family_code' => '',
-                'crawler_family_homepage' => '',
-                'crawler_family_vendor' => '',
-                'crawler_family_vendor_code' => '',
-                'crawler_family_vendor_homepage' => '',
-                'crawler_family_icon' => '',
-                'crawler_family_info_url' => '',
-                'crawler_last_seen' => '',
-                'crawler_category' => '',
-                'crawler_category_code' => '',
-                'crawler_respect_robotstxt' => '',
-                'datacenter_name' => '',
-                'datacenter_name_code' => '',
-                'datacenter_homepage' => ''
-            )
+                    array('ua_string' => '',
+                            'sec_ch_ua'                     => '', 
+                            'sec_ch_ua_full_version_list'   => '', 
+                            'sec_ch_ua_mobile'              => '', 
+                            'sec_ch_ua_full_version'        => '', 
+                            'sec_ch_ua_platform'            => '',                                                                                     
+                            'sec_ch_ua_platform_version'    => '', 
+                            'sec_ch_ua_model'               => '', 
+                            'ua_class'                      => '',
+                            'ua_class_code'                 => '',
+                            'ua'                            => '',
+                            'ua_version'                    => '',
+                            'ua_version_major'              => '',
+                            'ua_uptodate_current_version'   => '',
+                            'ua_family'                     => '',
+                            'ua_family_code'                => '',
+                            'ua_family_homepage'            => '',
+                            'ua_family_vendor'              => '',
+                            'ua_family_vendor_code'         => '',
+                            'ua_family_vendor_homepage'     => '',
+                            'ua_family_icon'                => '',
+                            'ua_family_icon_big'            => '',
+                            'ua_family_info_url'            => '',
+                            'ua_engine'                     => '',
+                            'os'                            => '',
+                            'os_code'                       => '',
+                            'os_homepage'                   => '',
+                            'os_icon'                       => '',
+                            'os_icon_big'                   => '',
+                            'os_info_url'                   => '',
+                            'os_family'                     => '',
+                            'os_family_code'                => '',
+                            'os_family_vendor'              => '',
+                            'os_family_vendor_code'         => '',
+                            'os_family_vendor_homepage'     => '',
+                            'device_class'                  => '',
+                            'device_class_code'             => '',
+                            'device_class_icon'             => '',
+                            'device_class_icon_big'         => '',
+                            'device_class_info_url'         => '',
+                            'device_marketname'             => '',
+                            'device_brand'                  => '',
+                            'device_brand_code'             => '',
+                            'device_brand_homepage'         => '',
+                            'device_brand_icon'             => '',
+                            'device_brand_icon_big'         => '',
+                            'device_brand_info_url'         => '',
+                            'crawler_last_seen'             => '',
+                            'crawler_category'              => '',
+                            'crawler_category_code'         => '',
+                            'crawler_respect_robotstxt'     => ''
+                      ),
+                    'ip_address' =>
+                      array('ip'                            => '',
+                            'ip_ver'                        => '',
+                            'ip_classification'             => '',
+                            'ip_classification_code'        => '',
+                            'ip_hostname'                   => '',
+                            'ip_last_seen'                  => '',
+                            'ip_country'                    => '',
+                            'ip_country_code'               => '',
+                            'ip_city'                       => '',
+                            'crawler_name'                  => '',
+                            'crawler_ver'                   => '',
+                            'crawler_ver_major'             => '',
+                            'crawler_family'                => '',
+                            'crawler_family_code'           => '',
+                            'crawler_family_homepage'       => '',
+                            'crawler_family_vendor'         => '',
+                            'crawler_family_vendor_code'    => '',
+                            'crawler_family_vendor_homepage'=> '',
+                            'crawler_family_icon'           => '',
+                            'crawler_family_info_url'       => '',
+                            'crawler_last_seen'             => '',
+                            'crawler_category'              => '',
+                            'crawler_category_code'         => '',
+                            'crawler_respect_robotstxt'     => '',
+                            'datacenter_name'               => '',
+                            'datacenter_name_code'          => '',
+                            'datacenter_homepage'           => ''
+                      )
         );
 
-        if (!empty($this->ua)) {
-           
+        if (!empty($this->data['ua'])) {
+            //TODO - dodelat cache           
             $usedCache = false;
             if($this->cacheEnable) {
-                $retCache = $this->getCache( md5($this->ua) );
+                $retCache = $this->getCache( md5(json_encode($this->data['ua']) ) );
                 if($retCache) {
                     $ret['user_agent'] = unserialize($retCache);
                     $usedCache = true;
@@ -284,7 +234,7 @@ class Parser implements ParserInterface
                 $client_class_id = -1;
                 $os_id = 0;
                 $deviceclass_id = 0;
-                $ret['user_agent']['ua_string'] = $this->ua;
+                $ret['user_agent']['ua_string'] = $this->data['ua'];
                 $ret['user_agent']['ua_class'] = 'Unrecognized';
                 $ret['user_agent']['ua_class_code'] = 'unrecognized';
 
@@ -292,7 +242,7 @@ class Parser implements ParserInterface
                 $q = $this->dbdat->query("SELECT udger_crawler_list.id as botid,name,ver,ver_major,last_seen,respect_robotstxt,family,family_code,family_homepage,family_icon,vendor,vendor_code,vendor_homepage,crawler_classification,crawler_classification_code
                                               FROM udger_crawler_list
                                               LEFT JOIN udger_crawler_class ON udger_crawler_class.id=udger_crawler_list.class_id
-                                              WHERE ua_string='" . $this->dbdat->escapeString($this->ua) . "'");
+                                              WHERE ua_string='" . $this->dbdat->escapeString($this->data['ua']) . "'");
 
                 if ($r = $q->fetchArray(SQLITE3_ASSOC)) {
 
@@ -322,7 +272,7 @@ class Parser implements ParserInterface
                                                   JOIN udger_client_class ON udger_client_class.id=udger_client_list.class_id
                                                   ORDER BY sequence ASC");
                     while ($r = $q->fetchArray(SQLITE3_ASSOC)) {
-                        if (@preg_match($r["regstring"], $this->ua, $result)) {
+                        if (@preg_match($r["regstring"], $this->data['ua'], $result)) {
                             $client_id = $r['client_id'];
                             $client_class_id = $r['class_id'];
                             $ret['user_agent']['ua_class'] = $r['client_classification'];
@@ -357,7 +307,7 @@ class Parser implements ParserInterface
                                                   JOIN udger_os_list ON udger_os_list.id=udger_os_regex.os_id
                                                   ORDER BY sequence ASC");
                     while ($r = $q->fetchArray(SQLITE3_ASSOC)) {
-                        if (@preg_match($r["regstring"], $this->ua, $result)) {
+                        if (@preg_match($r["regstring"], $this->data['ua'], $result)) {
                             $os_id = $r['os_id'];
                             $ret['user_agent']['os'] = $r['name'];
                             $ret['user_agent']['os_code'] = $r['name_code'];
@@ -401,7 +351,7 @@ class Parser implements ParserInterface
                                                   ORDER BY sequence ASC");
 
                     while ($r = $q->fetchArray(SQLITE3_ASSOC)) {
-                        if (@preg_match($r["regstring"], $this->ua, $result)) {
+                        if (@preg_match($r["regstring"], $this->data['ua'], $result)) {
                             $deviceclass_id = $r['deviceclass_id'];
                             $ret['user_agent']['device_class'] = $r['name'];
                             $ret['user_agent']['device_class_code'] = $r['name_code'];
@@ -434,7 +384,7 @@ class Parser implements ParserInterface
                                                   (os_family_code='".$ret['user_agent']['os_family_code']."' AND os_code='".$ret['user_agent']['os_code']."'))
                                                   order by sequence");
                         while ($r = $q->fetchArray(SQLITE3_ASSOC)) {
-                            @preg_match($r["regstring"],$this->ua,$result);                        
+                            @preg_match($r["regstring"],$this->data['ua'],$result);                        
 
                             if(array_key_exists(1, $result)) {
                                 $qC=$this->dbdat->query("SELECT marketname,brand_code,brand,brand_url,icon,icon_big
@@ -457,12 +407,12 @@ class Parser implements ParserInterface
                         }
                     }
                     if($this->cacheEnable) {
-                        $this->setCache( md5($this->ua) , serialize($ret['user_agent']) );
+                        $this->setCache( md5($this->data['ua']) , serialize($ret['user_agent']) );
                     }
                 }
             }
-
-            $this->ua = '';
+            
+            $this->data = array();
         }
 
         if (!empty($this->ip)) {
@@ -554,7 +504,7 @@ class Parser implements ParserInterface
             }
 
             $this->ip = '';
-        }
+        }        
         return $ret;
     }
 

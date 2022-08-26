@@ -14,5 +14,7 @@ interface ParserInterface {
     
     public function setIP($ip);
     
+    public function setHeaders($ip);
+    
     public function setDataFile($path);
 }
