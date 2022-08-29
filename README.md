@@ -23,7 +23,31 @@ It also provides information about IP addresses (Public proxies, VPN services, T
     composer require udger/udger-php-v4
     
 ### Usage
-You should review the included examples/parse.php    
+You should review the included examples (`parseUA-IP.php`, `parseSec-Ch.php` ... etc)
+
+Here's a quick example:
+
+```php
+$factory = new Udger\ParserFactory(sys_get_temp_dir() . "/udgercache/udgerdb_v4.dat");
+$parser = $factory->getParser();
+
+// enable/disable LRU cache
+$parser->setCacheEnable(false); // default is enable
+//$parser->setCacheSize(4000);  // default size is 3000
+
+try {   
+    $parser->setSecChUa('"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"');
+    $parser->setUA('Mozilla/5.0 (Linux; Android 11; CPH2001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Mobile Safari/537.36');
+    $parser->setSecChUaMobile('?1');
+    $parser->setSecChUaFullVersion('"104.0.5112.97"');
+    $parser->setSecChUaPlatform('"Android"');
+    $parser->setSecChUaPlatformVersion('"11.0.0"');
+    $parser->setSecChUaModel('"CPH2001"');
+    $ret = $parser->parse();
+    print_r($ret); 
+} catch (Exception $ex) {
+    echo "Error: " . $ex->getMessage(). PHP_EOL;
+}   
 
 ### Automatic updates download
 - for autoupdate data use Udger data updater (https://udger.com/support/documentation/?doc=62)

@@ -5,5 +5,5 @@ namespace Udger\Helper;
 
 interface HeaderInterface {
 
-    public function parseHeaders($headers,$ret);
+    public function parseHeaders($headers, $data);
 }
