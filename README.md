@@ -46,7 +46,8 @@ try {
     print_r($ret); 
 } catch (Exception $ex) {
     echo "Error: " . $ex->getMessage(). PHP_EOL;
-}   
+}
+```   
 
 ### Automatic updates download
 - for autoupdate data use Udger data updater (https://udger.com/support/documentation/?doc=62)
