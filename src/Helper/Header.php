@@ -5,7 +5,7 @@ namespace Udger\Helper;
 class Header implements HeaderInterface{
 
     /**
-     * Get IP verison
+     * Get headers
      * 
      * @param string $headers, array $ret
      * @return array
@@ -39,7 +39,8 @@ class Header implements HeaderInterface{
                $ret['SecChUaModel'] = $header[1];
             }
             else if(strtolower($header[0]) == 'user-agent') {
-               $ret['ua'] = $header[1];
+               //$ret['ua'] = $header[1];
+               $ret['ua'] = str_replace($header[0].": ", "", $line);
             }
         } 
                 

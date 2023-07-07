@@ -3,7 +3,7 @@
     "description": "PHP agent string parser based on Udger https://udger.com/products/local_parser",
     "type": "library",
     "license": "MIT",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "autoload": {
         "psr-4": {
             "Udger\\": "src/"
